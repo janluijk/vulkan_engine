@@ -1,12 +1,11 @@
-#include "first_app.hpp"
+#include "app.hpp"
 
 // std
 #include <cstdlib>
 #include <iostream>
-#include <stdexcept>
 
 int main() {
-  vke::FirstApp app{};
+  vke::App app{};
 
   try {
     app.run();
@@ -17,3 +16,4 @@ int main() {
 
   return EXIT_SUCCESS;
 }
+

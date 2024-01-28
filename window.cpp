@@ -1,24 +1,34 @@
 #include "window.hpp"
 
+// std libraries
+#include <stdexcept>
+
 namespace vke {
 
-VkeWindow::VkeWindow(int w, int h, std::string name)
+Window::Window(int w, int h, std::string name)
     : width{w}, height{h}, windowName{name} {
 			initWindow();
 }
 
-VkeWindow::~VkeWindow() {
+Window::~Window() {
 	glfwDestroyWindow(window);
 	glfwTerminate();
 }
 
-void VkeWindow::initWindow() {
+void Window::initWindow() {
 	glfwInit();
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API); // No OpenGL context
 	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
 	window = glfwCreateWindow(width, height, windowName.c_str(), nullptr, nullptr);
-
 }
 
+
+void Window::createWindowSurface(VkInstance instance, VkSurfaceKHR *surface) {
+  if (glfwCreateWindowSurface(instance, window, nullptr, surface) != VK_SUCCESS) {
+    throw std::runtime_error("failed to create window surface");
+  }
+
+
+}
 } // namespace vulkanEngine

@@ -1,3 +1,10 @@
 .vscode/settings.json
 shaders/simple_shader.frag.spv
 shaders/simple_shader.vert.spv
+.clangd
+.null-ls_414612_my_engine_swap_chain.cpp
+compile_commands.json
+keymaps.txt
+.cache
+vulkan_engine
+vulkan_engine
