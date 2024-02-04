@@ -4,6 +4,7 @@
 #include "pipeline.hpp"
 #include "swap_chain.hpp"
 #include "window.hpp"
+#include "model.hpp"
 
 #include <memory>
 #include <vector>
@@ -14,18 +15,17 @@ namespace vke {
 class App {
 
 public:
-  static constexpr int WIDTH = 1280;
-  static constexpr int HEIGHT = 720;
+  static constexpr int WIDTH = 2560;
+  static constexpr int HEIGHT = 1440;
 
   App();
   ~App();
-
   App(const App &) = delete;
   App &operator=(const App &) = delete;
 
   void run();
-
 private:
+  void loadModels();
   void createPipelineLayout();
   void createPipeline();
   void createCommandBuffers();
@@ -37,6 +37,11 @@ private:
   std::unique_ptr<Pipeline> pipeline;
   VkPipelineLayout pipelineLayout;
   std::vector<VkCommandBuffer> commandBuffers;
+  std::unique_ptr<Model> model;
+
+
+  // Sierpinksi
+  void sierpinski(std::vector<Model::Vertex> &vertices, int depth, glm::vec2 left, glm::vec2 right, glm::vec2 top);
 };
 
 } // namespace vke
