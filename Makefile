@@ -3,7 +3,7 @@ LDFLAGS = -lglfw -lvulkan  -lEGL -lGLESv2
 # LDFLAGS = -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 
 vulkan_engine: *.cpp *.hpp
-	g++ $(CFLAGS) -o vulkan_engine *.cpp $(LDFLAGS)
+	g++ $(CFLAGS) -o vulkan_engine *.cpp $(LDFLAGS) & ./compile.sh
 
 .PHONY: test clean
 
