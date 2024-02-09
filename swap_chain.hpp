@@ -7,17 +7,20 @@
 namespace vke {
 
 class SwapChain {
- public:
+public:
   static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
   SwapChain(Device &deviceRef, VkExtent2D windowExtent);
-  SwapChain(Device &deviceRef, VkExtent2D windowExtent, std::shared_ptr<SwapChain> previous);
+  SwapChain(Device &deviceRef, VkExtent2D windowExtent,
+            std::shared_ptr<SwapChain> previous);
   ~SwapChain();
 
   SwapChain(const SwapChain &) = delete;
-  SwapChain& operator=(const SwapChain &) = delete;
+  SwapChain &operator=(const SwapChain &) = delete;
 
-  VkFramebuffer getFrameBuffer(int index) { return swapChainFramebuffers[index]; }
+  VkFramebuffer getFrameBuffer(int index) {
+    return swapChainFramebuffers[index];
+  }
   VkRenderPass getRenderPass() { return renderPass; }
   VkImageView getImageView(int index) { return swapChainImageViews[index]; }
   size_t imageCount() { return swapChainImages.size(); }
@@ -27,14 +30,21 @@ class SwapChain {
   uint32_t height() { return swapChainExtent.height; }
 
   float extentAspectRatio() {
-    return static_cast<float>(swapChainExtent.width) / static_cast<float>(swapChainExtent.height);
+    return static_cast<float>(swapChainExtent.width) /
+           static_cast<float>(swapChainExtent.height);
   }
   VkFormat findDepthFormat();
 
   VkResult acquireNextImage(uint32_t *imageIndex);
-  VkResult submitCommandBuffers(const VkCommandBuffer *buffers, uint32_t *imageIndex);
+  VkResult submitCommandBuffers(const VkCommandBuffer *buffers,
+                                uint32_t *imageIndex);
 
- private:
+  bool compareSwapformats(const SwapChain &swapChain) const {
+    return swapChain.swapChainDepthFormat == swapChainDepthFormat &&
+           swapChain.swapChainImageFormat == swapChainImageFormat;
+  }
+
+private:
   void init();
   void createSwapChain();
   void createImageViews();
@@ -51,6 +61,7 @@ class SwapChain {
   VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
 
   VkFormat swapChainImageFormat;
+  VkFormat swapChainDepthFormat;
   VkExtent2D swapChainExtent;
 
   std::vector<VkFramebuffer> swapChainFramebuffers;
@@ -75,4 +86,4 @@ class SwapChain {
   size_t currentFrame = 0;
 };
 
-}  // namespace lve
+} // namespace vke
